@@ -1,0 +1,15 @@
+name: clean-storage
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clean-storage:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test
+      env:
+        AWS_DEFAULT_REGION: eu-central-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: aws s3 rm s3://test-backup-213 --recursive
