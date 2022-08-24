@@ -15,13 +15,8 @@ import (
 // fileCmd represents the file command
 var fileCmd = &cobra.Command{
 	Use:   "file",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Backup stream to file system",
+	Long:  `Backup a stream to file system backup store.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		stream, _ := cmd.Flags().GetString("stream")
 		outputDir, _ := cmd.Flags().GetString("output")
@@ -50,6 +45,6 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	fileCmd.Flags().StringP("output", "o", "", "Path to backup directory")
+	fileCmd.Flags().StringP("output", "o", "", "Path to backup directory (required)")
 	fileCmd.MarkFlagRequired("output")
 }
