@@ -12,4 +12,8 @@ jobs:
         AWS_DEFAULT_REGION: eu-central-1
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: aws s3 rm s3://test-backup-213 --recursive
+        AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+        AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+      run: |
+        aws s3 rm s3://test-backup-213 --recursive
+        az storage blob delete-batch --source testc --account-key $AZURE_STORAGE_ACCOUNT_KEY --account-name $AZURE_STORAGE_ACCOUNT_NAME

@@ -24,6 +24,7 @@ var s3Cmd = &cobra.Command{
 		stream, _ := cmd.Flags().GetString("stream")
 		bucket, _ := cmd.Flags().GetString("bucket")
 		prefix, _ := cmd.Flags().GetString("prefix")
+		server, _ := cmd.Flags().GetString("server")
 
 		region := "eu-central-1" // is ignored s3 is global
 		mySession := session.Must(session.NewSession(&aws.Config{
@@ -32,7 +33,7 @@ var s3Cmd = &cobra.Command{
 
 		store := stores.NewS3BackupStore(s3.New(mySession), bucket, prefix)
 		j := jetup.New(stores.NewLoggingStore(store))
-		nc, err := nats.Connect("nats://localhost:4222")
+		nc, err := nats.Connect(server)
 		if err != nil {
 			panic(err)
 		}
@@ -54,8 +55,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	fileCmd.Flags().StringP("bucket", "b", "", "S3 bucket name (required)")
-	fileCmd.MarkFlagRequired("bucket")
+	s3Cmd.Flags().StringP("bucket", "b", "", "S3 bucket name (required)")
+	s3Cmd.MarkFlagRequired("bucket")
 
-	fileCmd.Flags().StringP("prefix", "p", "backup/", "S3 object key prefix")
+	s3Cmd.Flags().StringP("prefix", "p", "backup/", "S3 object key prefix")
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-func Test(t *testing.T) {
+func TestS3(t *testing.T) {
 	region := "eu-central-1"
 	mySession := session.Must(session.NewSession(&aws.Config{
 		Region: &region,
